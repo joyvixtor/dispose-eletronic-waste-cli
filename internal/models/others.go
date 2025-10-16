@@ -1,0 +1,96 @@
+package models
+
+type Others struct {
+	Tombamento            string
+	TipoEquipamento       string
+	Marca                 string
+	DescricaoComplementar string
+	Classificacao         string
+	ComponentesConstam    string
+	EstadoItem            string
+	SetorOrigem           string
+}
+
+var TiposEquipamentoOutros = []string{
+	"Access Point",
+	"Caixa de Som",
+	"Camera Digital",
+	"Camera Fotográfica",
+	"Computador Interativo",
+	"Drive gravador CD",
+	"Estabilizador",
+	"Fax",
+	"Fragmentadora de Papel",
+	"HD Externo",
+	"Hub",
+	"Impressora de Cupom",
+	"Leitor Biométrico",
+	"Leitor de Cartão",
+	"Leitor de Cheques",
+	"Mesa Digitalizadora",
+	"Microfone",
+	"Modem",
+	"Mouse",
+	"Nobreak",
+	"Pen Drive",
+	"Projetor",
+	"Roteador",
+	"Scanner",
+	"Switch",
+	"Teclado",
+	"Terminal de Vídeo",
+	"Zip Drive",
+	"OUTROS",
+}
+
+var MarcasOutros = []string{
+	"3CAM",
+	"Abit",
+	"Acer",
+	"Advent",
+	"AMD",
+	"Apple",
+	"ASI",
+	"ASUS",
+	"AT&T",
+	"Compaq",
+	"Creative",
+	"Dell",
+	"Digicom",
+	"ECS",
+	"Epson",
+	"Everex",
+	"Gateway",
+	"Goldstar",
+	"HP",
+	"IBM",
+	"Intel",
+	"Itautec",
+	"Lenovo",
+	"LG",
+	"Lite-On",
+	"Microsoft",
+	"MSI",
+	"NEC",
+	"Novell",
+	"Nvidia",
+	"Panasonic",
+	"PCChips",
+	"Philips",
+	"Phitronics",
+	"Positivo",
+	"Samsung",
+	"Sony",
+	"Toshiba",
+	"Trident Microsystems",
+	"Tsunami",
+	"TVSE Electronics",
+	"Twinhead",
+	"UMC",
+	"Veo Intl",
+	"VIA",
+	"ViewSonic",
+	"Xerox",
+	"Zebra",
+	"OUTROS",
+}

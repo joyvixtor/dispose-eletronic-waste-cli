@@ -13,6 +13,8 @@ func main() {
 	var desktops []models.DesktopOrNotebook
 	var notebooks []models.DesktopOrNotebook
 	var monitors []models.Monitor
+	var printers []models.Printer
+	var others []models.Others
 
 	for {
 		fmt.Println("\n--- Gerador de Planilha para Descarte de Bens ---")
@@ -22,7 +24,7 @@ func main() {
 		fmt.Println("3. Impressora")
 		fmt.Println("4. Outros Itens de Informática")
 
-		escolha := helpers.LerEntrada("Digite o número da opção desejada (ou 'sair' para encerrar): ")
+		escolha := helpers.LerEntrada("Digite o número da opção desejada: ")
 
 		var tipoItem string
 		var dadosBase interface{}
@@ -39,6 +41,12 @@ func main() {
 		case "2":
 			tipoItem = "Monitor"
 			dadosBase = helpers.ObterDadosMonitor()
+		case "3":
+			tipoItem = "Impressora"
+			dadosBase = helpers.ObterDadosImpressora()
+		case "4":
+			tipoItem = "Outros"
+			dadosBase = helpers.ObterDadosOutros()
 		default:
 			fmt.Println("Opção inválida. Por favor, tente novamente")
 			continue
@@ -67,6 +75,14 @@ func main() {
 				item := dadosBase.(models.Monitor)
 				item.Tombamento = tombamento
 				monitors = append(monitors, item)
+			case "Impressora":
+				item := dadosBase.(models.Printer)
+				item.Tombamento = tombamento
+				printers = append(printers, item)
+			case "Outros":
+				item := dadosBase.(models.Others)
+				item.Tombamento = tombamento
+				others = append(others, item)
 			}
 		}
 
@@ -76,6 +92,6 @@ func main() {
 		}
 	}
 
-	builders.GerarArquivos(desktops, notebooks, monitors)
+	builders.GerarArquivos(desktops, notebooks, monitors, printers, others)
 	fmt.Println("\nPrograma encerrado.")
 }

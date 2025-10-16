@@ -5,11 +5,10 @@ import (
 	"fmt"
 )
 
-func ObterDadosMonitor() models.Monitor {
-	fmt.Println("\n--- Preencha os dados para Monitor ---")
-	return models.Monitor{
-		Tipo:                  SelecionarOpcao("Tipo: ", models.TiposMonitor),
-		TamanhoTela:           LerEntrada("Tamanho da Tela: "),
+func ObterDadosImpressora() models.Printer {
+	fmt.Println("\n--- Preencha os dados para Impressora ---")
+	return models.Printer{
+		TipoImpressora:        SelecionarOpcao("Tipo: ", models.TiposImpressora),
 		Marca:                 LerEntrada("Marca: "),
 		DescricaoComplementar: LerEntrada("Descrição Complementar: "),
 		Classificacao:         SelecionarOpcao("Classificação: ", models.Classificacoes),

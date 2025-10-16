@@ -25,6 +25,7 @@ var VelocidadesProcessador = []string{
 	"de 701MHz até 800MHz",
 	"de 801MHz até 900MHz",
 	"de 901MHz até 1GHz",
+	"Maior que 1GHz",
 }
 
 var Marcas = []string{

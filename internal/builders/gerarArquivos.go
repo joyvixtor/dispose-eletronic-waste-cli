@@ -13,6 +13,8 @@ func GerarArquivos(
 	desktops []models.DesktopOrNotebook,
 	notebooks []models.DesktopOrNotebook,
 	monitors []models.Monitor,
+	printers []models.Printer,
+	others []models.Others,
 ) {
 	if len(desktops) == 0 && len(notebooks) == 0 {
 		return
@@ -119,6 +121,62 @@ func GerarArquivos(
 				item.SetorOrigem,
 			}
 			f.SetSheetRow("Monitors", fmt.Sprintf("A%d", i+2), &row)
+		}
+	}
+
+	if len(printers) > 0 {
+		f.NewSheet("Printers")
+		headers := []string{
+			"Nº Tombamento",
+			"Tipo da Impressora",
+			"Marca",
+			"Descrição",
+			"Classificação",
+			"Componentes Constam?",
+			"Observações sobre o estado do bem",
+			"Setor Origem",
+		}
+		f.SetSheetRow("Printers", "A1", &headers)
+		for i, item := range printers {
+			row := []interface{}{
+				item.Tombamento,
+				item.TipoImpressora,
+				item.Marca,
+				item.DescricaoComplementar,
+				item.Classificacao,
+				item.ComponentesConstam,
+				item.EstadoItem,
+				item.SetorOrigem,
+			}
+			f.SetSheetRow("Printers", fmt.Sprintf("A%d", i+2), &row)
+		}
+	}
+
+	if len(others) > 0 {
+		f.NewSheet("Others")
+		headers := []string{
+			"Nº Tombamento",
+			"Tipo de Equipamento",
+			"Marca",
+			"Descrição",
+			"Classificação",
+			"Componentes Constam?",
+			"Observações sobre o estado do bem",
+			"Setor Origem",
+		}
+		f.SetSheetRow("Others", "A1", &headers)
+		for i, item := range others {
+			row := []interface{}{
+				item.Tombamento,
+				item.TipoEquipamento,
+				item.Marca,
+				item.DescricaoComplementar,
+				item.Classificacao,
+				item.ComponentesConstam,
+				item.EstadoItem,
+				item.SetorOrigem,
+			}
+			f.SetSheetRow("Others", fmt.Sprintf("A%d", i+2), &row)
 		}
 	}
 
