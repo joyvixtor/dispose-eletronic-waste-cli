@@ -12,6 +12,7 @@ import (
 func GerarArquivos(
 	desktops []models.DesktopOrNotebook,
 	notebooks []models.DesktopOrNotebook,
+	monitors []models.Monitor,
 ) {
 	if len(desktops) == 0 && len(notebooks) == 0 {
 		return
@@ -25,7 +26,19 @@ func GerarArquivos(
 
 	if len(desktops) > 0 {
 		f.NewSheet("Desktop")
-		headers := []string{"Nº Tombamento", "Processador", "Velocidade/Clock", "Memória RAM", "Armazenamento", "Marca", "Descrição", "Classificação", "Componentes Constam?", "Observações", "Setor Origem"}
+		headers := []string{
+			"Nº Tombamento",
+			"Processador",
+			"Velocidade/Clock",
+			"Memória RAM",
+			"Armazenamento",
+			"Marca",
+			"Descrição",
+			"Classificação",
+			"Componentes Constam?",
+			"Observações sobre o estado do bem",
+			"Setor Origem",
+		}
 		f.SetSheetRow("Desktop", "A1", &headers)
 		for i, item := range desktops {
 			row := []interface{}{
@@ -42,6 +55,70 @@ func GerarArquivos(
 				item.SetorOrigem,
 			}
 			f.SetSheetRow("Desktop", fmt.Sprintf("A%d", i+2), &row)
+		}
+	}
+
+	if len(notebooks) > 0 {
+		f.NewSheet("Notebooks")
+		headers := []string{
+			"Nº Tombamento",
+			"Processador",
+			"Velocidade/Clock",
+			"Memória RAM",
+			"Armazenamento",
+			"Marca",
+			"Descrição",
+			"Classificação",
+			"Componentes Constam?",
+			"Observações sobre o estado do bem",
+			"Setor Origem",
+		}
+		f.SetSheetRow("Notebooks", "A1", &headers)
+		for i, item := range notebooks {
+			row := []interface{}{
+				item.Tombamento,
+				item.Processador,
+				item.Clock,
+				item.RAM,
+				item.Armazenamento,
+				item.Marca,
+				item.DescricaoComplementar,
+				item.Classificacao,
+				item.ComponentesConstam,
+				item.EstadoItem,
+				item.SetorOrigem,
+			}
+			f.SetSheetRow("Notebooks", fmt.Sprintf("A%d", i+2), &row)
+		}
+	}
+
+	if len(monitors) > 0 {
+		f.NewSheet("Monitors")
+		headers := []string{
+			"Nº Tombamento",
+			"Tipo do monitor",
+			"Tamanho da Tela",
+			"Marca",
+			"Descrição",
+			"Classificação",
+			"Componentes Constam?",
+			"Observações sobre o estado do bem",
+			"Setor Origem",
+		}
+		f.SetSheetRow("Monitors", "A1", &headers)
+		for i, item := range monitors {
+			row := []interface{}{
+				item.Tombamento,
+				item.Tipo,
+				item.TamanhoTela,
+				item.Marca,
+				item.DescricaoComplementar,
+				item.Classificacao,
+				item.ComponentesConstam,
+				item.EstadoItem,
+				item.SetorOrigem,
+			}
+			f.SetSheetRow("Monitors", fmt.Sprintf("A%d", i+2), &row)
 		}
 	}
 

@@ -3,15 +3,16 @@ package main
 import (
 	builders "dispose-eletronic-waste-soft-version/internal/builders"
 	helpers "dispose-eletronic-waste-soft-version/internal/helpers"
-	DesktopOrNotebook "dispose-eletronic-waste-soft-version/internal/models"
+	models "dispose-eletronic-waste-soft-version/internal/models"
 	"fmt"
 	"strconv"
 	"strings"
 )
 
 func main() {
-	var desktops []DesktopOrNotebook.DesktopOrNotebook
-	var notebooks []DesktopOrNotebook.DesktopOrNotebook
+	var desktops []models.DesktopOrNotebook
+	var notebooks []models.DesktopOrNotebook
+	var monitors []models.Monitor
 
 	for {
 		fmt.Println("\n--- Gerador de Planilha para Descarte de Bens ---")
@@ -35,6 +36,9 @@ func main() {
 				continue
 			}
 			dadosBase = helpers.ObterDadosDesktopOuNotebook()
+		case "2":
+			tipoItem = "Monitor"
+			dadosBase = helpers.ObterDadosMonitor()
 		default:
 			fmt.Println("Opção inválida. Por favor, tente novamente")
 			continue
@@ -52,13 +56,17 @@ func main() {
 
 			switch tipoItem {
 			case "D":
-				item := dadosBase.(DesktopOrNotebook.DesktopOrNotebook)
+				item := dadosBase.(models.DesktopOrNotebook)
 				item.Tombamento = tombamento
 				desktops = append(desktops, item)
 			case "N":
-				item := dadosBase.(DesktopOrNotebook.DesktopOrNotebook)
+				item := dadosBase.(models.DesktopOrNotebook)
 				item.Tombamento = tombamento
 				notebooks = append(notebooks, item)
+			case "Monitor":
+				item := dadosBase.(models.Monitor)
+				item.Tombamento = tombamento
+				monitors = append(monitors, item)
 			}
 		}
 
@@ -68,6 +76,6 @@ func main() {
 		}
 	}
 
-	builders.GerarArquivos(desktops, notebooks)
+	builders.GerarArquivos(desktops, notebooks, monitors)
 	fmt.Println("\nPrograma encerrado.")
 }

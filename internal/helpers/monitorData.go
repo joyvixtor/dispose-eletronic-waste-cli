@@ -5,14 +5,12 @@ import (
 	"fmt"
 )
 
-func ObterDadosDesktopOuNotebook() models.DesktopOrNotebook {
+func ObterDadosMonitor() models.Monitor {
 	fmt.Println("\n--- Preencha os dados para Desktop ou Notebook ---")
-	return models.DesktopOrNotebook{
-		Processador:           LerEntrada("Processador: "),
-		Clock:                 SelecionarOpcao("Velocidade: ", models.VelocidadesProcessador),
-		RAM:                   LerEntrada("RAM: "),
-		Armazenamento:         LerEntrada("Armazenamento: "),
-		Marca:                 SelecionarOpcao("Marca: ", models.Marcas),
+	return models.Monitor{
+		Tipo:                  SelecionarOpcao("Tipo: ", models.TiposMonitor),
+		TamanhoTela:           LerEntrada("Tamanho da Tela: "),
+		Marca:                 LerEntrada("Marca: "),
 		DescricaoComplementar: LerEntrada("Descrição Complementar: "),
 		Classificacao:         SelecionarOpcao("Classificação: ", models.Classificacoes),
 		ComponentesConstam:    SelecionarOpcao("Os componentes listados ainda constam no item?: ", models.ComponentesConstam),
