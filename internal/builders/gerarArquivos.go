@@ -4,6 +4,8 @@ import (
 	models "dispose-eletronic-waste-soft-version/internal/models"
 	"fmt"
 	"log"
+	"os"
+	"path/filepath"
 	"time"
 
 	"github.com/xuri/excelize/v2"
@@ -194,8 +196,17 @@ func GerarArquivos(
 	}
 
 	f.DeleteSheet("Sheet1")
-	if err := f.SaveAs(nomeXLSX); err != nil {
+
+	execPath, err := os.Executable()
+	if err != nil {
+		log.Fatal("Erro ao obter caminho do executável:", err)
+	}
+	dirExecutavel := filepath.Dir(execPath)
+
+	caminhoCompleto := filepath.Join(dirExecutavel, nomeXLSX)
+
+	if err := f.SaveAs(caminhoCompleto); err != nil {
 		log.Fatal("Falha ao salvar o arquivo XLSX:", err)
 	}
-	fmt.Printf("\nPlanilha '%s' gerada com sucesso!\n", nomeXLSX)
+	fmt.Printf("\nPlanilha '%s' gerada com sucesso em: %s\n", nomeXLSX, dirExecutavel)
 }
