@@ -14,7 +14,7 @@ import (
 func ajustarLarguraColunas(f *excelize.File, sheetName string, headers []string) {
 	for i, header := range headers {
 		col, _ := excelize.ColumnNumberToName(i + 1)
-		width := float64(len(header)) + 2
+		width := float64(len(header)) + 8
 		f.SetColWidth(sheetName, col, col, width)
 	}
 }
@@ -43,6 +43,50 @@ func adicionarLinhaServidor(f *excelize.File, sheetName string, servidor models.
 	f.SetCellStyle(sheetName, "A1", fmt.Sprintf("%s1", ultimaColuna), style)
 
 	f.SetRowHeight(sheetName, 1, 20)
+}
+
+func aplicarEstiloHeader(f *excelize.File, sheetName string, numColunas int) {
+	styleHeader, _ := f.NewStyle(&excelize.Style{
+		Font: &excelize.Font{
+			Bold: true,
+			Size: 11,
+		},
+		Alignment: &excelize.Alignment{
+			Horizontal: "center",
+			Vertical:   "center",
+			WrapText:   true,
+		},
+		Border: []excelize.Border{
+			{Type: "left", Color: "000000", Style: 1},
+			{Type: "right", Color: "000000", Style: 1},
+			{Type: "top", Color: "000000", Style: 1},
+			{Type: "bottom", Color: "000000", Style: 1},
+		},
+	})
+
+	ultimaColuna, _ := excelize.ColumnNumberToName(numColunas)
+	f.SetCellStyle(sheetName, "A2", fmt.Sprintf("%s2", ultimaColuna), styleHeader)
+	f.SetRowHeight(sheetName, 2, 30)
+}
+
+func aplicarEstiloDados(f *excelize.File, sheetName string, linha int, numColunas int) {
+	styleDados, _ := f.NewStyle(&excelize.Style{
+		Alignment: &excelize.Alignment{
+			Horizontal: "center",
+			Vertical:   "center",
+			WrapText:   true,
+		},
+		Border: []excelize.Border{
+			{Type: "left", Color: "000000", Style: 1},
+			{Type: "right", Color: "000000", Style: 1},
+			{Type: "top", Color: "000000", Style: 1},
+			{Type: "bottom", Color: "000000", Style: 1},
+		},
+	})
+
+	ultimaColuna, _ := excelize.ColumnNumberToName(numColunas)
+	f.SetCellStyle(sheetName, fmt.Sprintf("A%d", linha), fmt.Sprintf("%s%d", ultimaColuna, linha), styleDados)
+	f.SetRowHeight(sheetName, linha, 20)
 }
 
 func GerarArquivos(
@@ -83,6 +127,7 @@ func GerarArquivos(
 
 		f.SetSheetRow("Desktop", "A2", &headers)
 		ajustarLarguraColunas(f, "Desktop", headers)
+		aplicarEstiloHeader(f, "Desktop", len(headers))
 
 		for i, item := range desktops {
 			row := []interface{}{
@@ -98,7 +143,9 @@ func GerarArquivos(
 				item.EstadoItem,
 				item.SetorOrigem,
 			}
-			f.SetSheetRow("Desktop", fmt.Sprintf("A%d", i+3), &row)
+			linhaAtual := i + 3
+			f.SetSheetRow("Desktop", fmt.Sprintf("A%d", linhaAtual), &row)
+			aplicarEstiloDados(f, "Desktop", linhaAtual, len(headers))
 		}
 	}
 
@@ -122,6 +169,7 @@ func GerarArquivos(
 
 		f.SetSheetRow("Notebooks", "A2", &headers)
 		ajustarLarguraColunas(f, "Notebooks", headers)
+		aplicarEstiloHeader(f, "Notebooks", len(headers))
 
 		for i, item := range notebooks {
 			row := []interface{}{
@@ -137,7 +185,9 @@ func GerarArquivos(
 				item.EstadoItem,
 				item.SetorOrigem,
 			}
-			f.SetSheetRow("Notebooks", fmt.Sprintf("A%d", i+3), &row)
+			linhaAtual := i + 3
+			f.SetSheetRow("Notebooks", fmt.Sprintf("A%d", linhaAtual), &row)
+			aplicarEstiloDados(f, "Notebooks", linhaAtual, len(headers))
 		}
 	}
 
@@ -159,6 +209,7 @@ func GerarArquivos(
 
 		f.SetSheetRow("Monitors", "A2", &headers)
 		ajustarLarguraColunas(f, "Monitors", headers)
+		aplicarEstiloHeader(f, "Monitors", len(headers))
 
 		for i, item := range monitors {
 			row := []interface{}{
@@ -172,7 +223,9 @@ func GerarArquivos(
 				item.EstadoItem,
 				item.SetorOrigem,
 			}
-			f.SetSheetRow("Monitors", fmt.Sprintf("A%d", i+3), &row)
+			linhaAtual := i + 3
+			f.SetSheetRow("Monitors", fmt.Sprintf("A%d", linhaAtual), &row)
+			aplicarEstiloDados(f, "Monitors", linhaAtual, len(headers))
 		}
 	}
 
@@ -193,6 +246,7 @@ func GerarArquivos(
 
 		f.SetSheetRow("Printers", "A2", &headers)
 		ajustarLarguraColunas(f, "Printers", headers)
+		aplicarEstiloHeader(f, "Printers", len(headers))
 
 		for i, item := range printers {
 			row := []interface{}{
@@ -205,7 +259,9 @@ func GerarArquivos(
 				item.EstadoItem,
 				item.SetorOrigem,
 			}
-			f.SetSheetRow("Printers", fmt.Sprintf("A%d", i+3), &row)
+			linhaAtual := i + 3
+			f.SetSheetRow("Printers", fmt.Sprintf("A%d", linhaAtual), &row)
+			aplicarEstiloDados(f, "Printers", linhaAtual, len(headers))
 		}
 	}
 
@@ -226,6 +282,7 @@ func GerarArquivos(
 
 		f.SetSheetRow("Others", "A2", &headers)
 		ajustarLarguraColunas(f, "Others", headers)
+		aplicarEstiloHeader(f, "Others", len(headers))
 
 		for i, item := range others {
 			row := []interface{}{
@@ -238,7 +295,9 @@ func GerarArquivos(
 				item.EstadoItem,
 				item.SetorOrigem,
 			}
-			f.SetSheetRow("Others", fmt.Sprintf("A%d", i+3), &row)
+			linhaAtual := i + 3
+			f.SetSheetRow("Others", fmt.Sprintf("A%d", linhaAtual), &row)
+			aplicarEstiloDados(f, "Others", linhaAtual, len(headers))
 		}
 	}
 
