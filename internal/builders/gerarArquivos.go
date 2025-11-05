@@ -19,11 +19,38 @@ func ajustarLarguraColunas(f *excelize.File, sheetName string, headers []string)
 	}
 }
 
+func adicionarLinhaServidor(f *excelize.File, sheetName string, servidor models.Servidor, numColunas int) {
+	textoServidor := fmt.Sprintf("Responsável técnico: %s  SIAPE: %s  Data de avaliação: %s",
+		servidor.ResponsavelTecnico,
+		servidor.Siape,
+		servidor.DataAvaliacao)
+
+	f.SetCellValue(sheetName, "A1", textoServidor)
+
+	ultimaColuna, _ := excelize.ColumnNumberToName(numColunas)
+	f.MergeCell(sheetName, "A1", fmt.Sprintf("%s1", ultimaColuna))
+
+	style, _ := f.NewStyle(&excelize.Style{
+		Alignment: &excelize.Alignment{
+			Horizontal: "center",
+			Vertical:   "center",
+		},
+		Font: &excelize.Font{
+			Bold: true,
+			Size: 11,
+		},
+	})
+	f.SetCellStyle(sheetName, "A1", fmt.Sprintf("%s1", ultimaColuna), style)
+
+	f.SetRowHeight(sheetName, 1, 20)
+}
+
 func GerarArquivos(
 	desktops []models.DesktopOrNotebook,
 	notebooks []models.DesktopOrNotebook,
 	monitors []models.Monitor,
 	printers []models.Printer,
+	servidor models.Servidor,
 	others []models.Others,
 ) {
 	if len(desktops) == 0 && len(notebooks) == 0 && len(monitors) == 0 && len(printers) == 0 && len(others) == 0 {
@@ -51,8 +78,12 @@ func GerarArquivos(
 			"Observações sobre o estado do bem",
 			"Setor Origem",
 		}
-		f.SetSheetRow("Desktop", "A1", &headers)
+
+		adicionarLinhaServidor(f, "Desktop", servidor, len(headers))
+
+		f.SetSheetRow("Desktop", "A2", &headers)
 		ajustarLarguraColunas(f, "Desktop", headers)
+
 		for i, item := range desktops {
 			row := []interface{}{
 				item.Tombamento,
@@ -67,7 +98,7 @@ func GerarArquivos(
 				item.EstadoItem,
 				item.SetorOrigem,
 			}
-			f.SetSheetRow("Desktop", fmt.Sprintf("A%d", i+2), &row)
+			f.SetSheetRow("Desktop", fmt.Sprintf("A%d", i+3), &row)
 		}
 	}
 
@@ -86,8 +117,12 @@ func GerarArquivos(
 			"Observações sobre o estado do bem",
 			"Setor Origem",
 		}
-		f.SetSheetRow("Notebooks", "A1", &headers)
+
+		adicionarLinhaServidor(f, "Notebooks", servidor, len(headers))
+
+		f.SetSheetRow("Notebooks", "A2", &headers)
 		ajustarLarguraColunas(f, "Notebooks", headers)
+
 		for i, item := range notebooks {
 			row := []interface{}{
 				item.Tombamento,
@@ -102,7 +137,7 @@ func GerarArquivos(
 				item.EstadoItem,
 				item.SetorOrigem,
 			}
-			f.SetSheetRow("Notebooks", fmt.Sprintf("A%d", i+2), &row)
+			f.SetSheetRow("Notebooks", fmt.Sprintf("A%d", i+3), &row)
 		}
 	}
 
@@ -119,8 +154,12 @@ func GerarArquivos(
 			"Observações sobre o estado do bem",
 			"Setor Origem",
 		}
-		f.SetSheetRow("Monitors", "A1", &headers)
+
+		adicionarLinhaServidor(f, "Monitors", servidor, len(headers))
+
+		f.SetSheetRow("Monitors", "A2", &headers)
 		ajustarLarguraColunas(f, "Monitors", headers)
+
 		for i, item := range monitors {
 			row := []interface{}{
 				item.Tombamento,
@@ -133,7 +172,7 @@ func GerarArquivos(
 				item.EstadoItem,
 				item.SetorOrigem,
 			}
-			f.SetSheetRow("Monitors", fmt.Sprintf("A%d", i+2), &row)
+			f.SetSheetRow("Monitors", fmt.Sprintf("A%d", i+3), &row)
 		}
 	}
 
@@ -149,8 +188,12 @@ func GerarArquivos(
 			"Observações sobre o estado do bem",
 			"Setor Origem",
 		}
-		f.SetSheetRow("Printers", "A1", &headers)
+
+		adicionarLinhaServidor(f, "Printers", servidor, len(headers))
+
+		f.SetSheetRow("Printers", "A2", &headers)
 		ajustarLarguraColunas(f, "Printers", headers)
+
 		for i, item := range printers {
 			row := []interface{}{
 				item.Tombamento,
@@ -162,7 +205,7 @@ func GerarArquivos(
 				item.EstadoItem,
 				item.SetorOrigem,
 			}
-			f.SetSheetRow("Printers", fmt.Sprintf("A%d", i+2), &row)
+			f.SetSheetRow("Printers", fmt.Sprintf("A%d", i+3), &row)
 		}
 	}
 
@@ -178,8 +221,12 @@ func GerarArquivos(
 			"Observações sobre o estado do bem",
 			"Setor Origem",
 		}
-		f.SetSheetRow("Others", "A1", &headers)
+
+		adicionarLinhaServidor(f, "Others", servidor, len(headers))
+
+		f.SetSheetRow("Others", "A2", &headers)
 		ajustarLarguraColunas(f, "Others", headers)
+
 		for i, item := range others {
 			row := []interface{}{
 				item.Tombamento,
@@ -191,7 +238,7 @@ func GerarArquivos(
 				item.EstadoItem,
 				item.SetorOrigem,
 			}
-			f.SetSheetRow("Others", fmt.Sprintf("A%d", i+2), &row)
+			f.SetSheetRow("Others", fmt.Sprintf("A%d", i+3), &row)
 		}
 	}
 

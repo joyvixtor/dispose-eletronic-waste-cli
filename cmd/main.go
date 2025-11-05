@@ -15,6 +15,7 @@ func main() {
 	var monitors []models.Monitor
 	var printers []models.Printer
 	var others []models.Others
+	var servidor models.Servidor
 
 	for {
 		fmt.Println("\n--- Gerador de Planilha para Descarte de Bens ---")
@@ -88,10 +89,29 @@ func main() {
 
 		adicionarMais := helpers.LerEntrada("Deseja adicionar mais itens? (s/n): ")
 		if strings.ToLower(adicionarMais) != "s" {
+
+			fmt.Println("Escolha o servidor responsável por este documento:")
+			fmt.Println("1. Christian")
+			fmt.Println("2. Renan")
+			fmt.Println("3. Emanuel")
+
+			escolha = helpers.LerEntrada("Digite o número da opção desejada: ")
+
+			switch escolha {
+			case "1":
+				servidor = models.ServidorChristian
+			case "2":
+				servidor = models.ServidorRenan
+			case "3":
+				servidor = models.ServidorEmanuel
+			default:
+				fmt.Println("Opção inválida. Por favor, tente novamente.")
+				continue
+			}
 			break
 		}
 	}
 
-	builders.GerarArquivos(desktops, notebooks, monitors, printers, others)
+	builders.GerarArquivos(desktops, notebooks, monitors, printers, servidor, others)
 	fmt.Println("\nPrograma encerrado.")
 }
