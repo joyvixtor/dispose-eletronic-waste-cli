@@ -15,17 +15,18 @@ type DesktopOrNotebook struct {
 }
 
 var VelocidadesProcessador = []string{
-	"até 100 MHz",
-	"de 101MHz até 200MHz",
-	"de 201MHz até 300MHz",
-	"de 301MHz até 400MHz",
-	"de 401MHz até 500MHz",
-	"de 501MHz até 600MHz",
-	"de 601MHz até 700MHz",
-	"de 701MHz até 800MHz",
-	"de 801MHz até 900MHz",
-	"de 901MHz até 1GHz",
-	"Maior que 1GHz",
+	"até 1.0 GHz",
+	"de 1.0 GHz até 1.5 GHz",
+	"de 1.5 GHz até 2.0 GHz",
+	"de 2.0 GHz até 2.5 GHz",
+	"de 2.5 GHz até 3.0 GHz",
+	"de 3.0 GHz até 3.5 GHz",
+	"de 3.5 GHz até 4.0 GHz",
+	"de 4.0 GHz até 4.5 GHz",
+	"de 4.5 GHz até 5.0 GHz",
+	"de 5.0 GHz até 5.5 GHz",
+	"de 5.5 GHz até 6.0 GHz",
+	"Maior que 6.0 GHz",
 }
 
 var Marcas = []string{
